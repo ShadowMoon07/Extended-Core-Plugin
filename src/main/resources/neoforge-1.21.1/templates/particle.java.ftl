@@ -68,19 +68,19 @@ import com.mojang.math.Axis;
 					if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
 					<#assign rendertype = "">
 					<#if model.rendertype == "Cutout">
-						<#assign rendertype = "entityCutoutNoCull(new ResourceLocation(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
+						<#assign rendertype = "entityCutoutNoCull(ResourceLocation.parse(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
 					<#elseif model.rendertype == "Translucent">
-						<#assign rendertype = "entityTranslucent(new ResourceLocation(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
+						<#assign rendertype = "entityTranslucent(ResourceLocation.parse(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
 					<#elseif model.rendertype == "Glowing">
-						<#assign rendertype = "entityTranslucentEmissive(new ResourceLocation(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
+						<#assign rendertype = "entityTranslucentEmissive(ResourceLocation.parse(\"${modid}:textures/particle/${data.getModElement().getRegistryName()}.png\"))">
 					<#elseif model.rendertype == "End portal">
 						<#assign rendertype = "endPortal()">
 					</#if>
 						VertexConsumer consumer = Minecraft.getInstance().renderBuffers().bufferSource().getBuffer(RenderType.${rendertype});
 						Vec3 camPos = event.getCamera().getPosition();
-						double x = Mth.lerp(event.getPartialTick(), particle.xo, particle.x) - camPos.x();
-						double y = Mth.lerp(event.getPartialTick(), particle.yo, particle.y) - camPos.y();
-						double z = Mth.lerp(event.getPartialTick(), particle.zo, particle.z) - camPos.z();
+						double x = Mth.lerp(event.getPartialTick().getGameTimeDeltaTicks(), particle.xo, particle.x) - camPos.x();
+						double y = Mth.lerp(event.getPartialTick().getGameTimeDeltaTicks(), particle.yo, particle.y) - camPos.y();
+						double z = Mth.lerp(event.getPartialTick().getGameTimeDeltaTicks(), particle.zo, particle.z) - camPos.z();
 						event.getPoseStack().pushPose();
 						event.getPoseStack().translate(x, y, z);
 						event.getPoseStack().mulPose(Axis.XP.rotationDegrees(180));
@@ -88,7 +88,7 @@ import com.mojang.math.Axis;
 						event.getPoseStack().mulPose(Axis.XP.rotationDegrees(rotX));
 						event.getPoseStack().mulPose(Axis.YP.rotationDegrees(rotY));
 						event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(rotZ));
-						model.renderToBuffer(event.getPoseStack(), consumer, particle.getLightColor(event.getPartialTick()), OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+						model.renderToBuffer(event.getPoseStack(), consumer, particle.getLightColor(event.getPartialTick().getGameTimeDeltaTicks()), OverlayTexture.NO_OVERLAY, 1);
 						event.getPoseStack().popPose();
 					}
 				}
@@ -167,7 +167,7 @@ import com.mojang.math.Axis;
 		</#if>
 	}
 
-	<#if data.renderType == "LIT">
+	<#if data.emissiveRendering>
 	@Override public int getLightColor(float partialTick) {
 		return 15728880;
 	}
