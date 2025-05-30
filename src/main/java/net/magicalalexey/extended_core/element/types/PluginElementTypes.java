@@ -4,6 +4,7 @@ import net.magicalalexey.extended_core.ui.modgui.ArmorTrimGUI;
 import net.magicalalexey.extended_core.ui.modgui.TrimMaterialGUI;
 import net.magicalalexey.extended_core.ui.modgui.ConfigGUI;
 import net.magicalalexey.extended_core.ui.modgui.BlockstatesGUI;
+import net.magicalalexey.extended_core.ui.modgui.ParticleModelGUI;
 import net.mcreator.element.ModElementType;
 
 import static net.mcreator.element.ModElementTypeLoader.register;
@@ -13,6 +14,7 @@ public class PluginElementTypes {
     public static ModElementType<?> ARMORTRIM;
     public static ModElementType<?> TRIMMATERIAL;
     public static ModElementType<?> BLOCKSTATES;
+    public static ModElementType<?> PARTICLEMODEL;
 
     public static void load(){
         CONFIG = register(
@@ -27,6 +29,9 @@ public class PluginElementTypes {
         );
         BLOCKSTATES = register(
                 new ModElementType<>("blockstates", (Character) null, BlockstatesGUI::new, Blockstates.class)
+        );
+        PARTICLEMODEL = register(
+                new ModElementType<>("particlemodel", (Character) null, ParticleModelGUI::new, ParticleModel.class)
         );
     }
 }
