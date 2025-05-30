@@ -1,0 +1,1 @@
+This is the color used in the description for the custom materials and in the custom trim's texture.

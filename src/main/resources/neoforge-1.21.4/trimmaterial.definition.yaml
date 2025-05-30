@@ -1,0 +1,16 @@
+global_templates:
+  - template: armor_trim/materials_tag.json.ftl
+    writer: json
+    name: "@RESROOT/data/minecraft/tags/item/trim_materials.json"
+  - template: armor_trim/armor_trims.json.ftl
+    writer: json
+    name: "@RESROOT/assets/minecraft/atlases/armor_trims.json"
+
+templates:
+  - template: armor_trim/custom_material.json.ftl
+    writer: json
+    name: "@MODDATAROOT/trim_material/@registryname.json"
+
+localizationkeys:
+  - key: trim_material.@modid.@registryname
+    mapto: name

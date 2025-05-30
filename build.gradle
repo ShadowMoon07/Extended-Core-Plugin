@@ -10,7 +10,7 @@ repositories {
     flatDir { dirs mcreator_path + '/lib' }
 }
 
-group = 'net.nerdypuzzle.configurationfiles'
+group = 'net.magicalalexey.extended_core'
 version = new JsonSlurper().parse(file('src/main/resources/plugin.json'))['info']['version']
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -21,7 +21,7 @@ dependencies {
 }
 
 tasks.jar {
-    archiveFileName.set("configuration_files.zip")
+    archiveFileName.set("extended-core-plugin.zip")
 }
 
 tasks.register('runMCreatorWithPlugin', JavaExec) {

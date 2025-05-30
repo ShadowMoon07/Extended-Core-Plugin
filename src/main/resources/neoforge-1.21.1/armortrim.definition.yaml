@@ -1,0 +1,20 @@
+global_templates:
+  - template: armor_trim/smithing_templates.json.ftl
+    writer: json
+    name: "@RESROOT/data/minecraft/tags/item/trim_templates.json"
+  - template: armor_trim/armor_trims.json.ftl
+    writer: json
+    name: "@RESROOT/assets/minecraft/atlases/armor_trims.json"
+    condition: ${!w.hasElementsOfType("trimmaterial")}
+
+templates:
+  - template: armor_trim/trim_pattern.json.ftl
+    writer: json
+    name: "@MODDATAROOT/trim_pattern/@registryname.json"
+  - template: armor_trim/smithing_recipe.json.ftl
+    writer: json
+    name: "@MODDATAROOT/recipe/@registryname_trim_smithing_template_smithing_trim.json"
+
+localizationkeys:
+  - key: trim_pattern.@modid.@registryname
+    mapto: name

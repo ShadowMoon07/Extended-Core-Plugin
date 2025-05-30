@@ -1,0 +1,1 @@
+This is the name that shown in the tooltip of the armor piece that is trimmed using this armor trim.

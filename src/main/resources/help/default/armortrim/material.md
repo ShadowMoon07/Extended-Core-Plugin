@@ -1,0 +1,1 @@
+This item will be used as a material when applying a trim template to armor.
