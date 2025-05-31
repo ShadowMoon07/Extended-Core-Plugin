@@ -88,7 +88,7 @@ import com.mojang.math.Axis;
 						event.getPoseStack().mulPose(Axis.XP.rotationDegrees(rotX));
 						event.getPoseStack().mulPose(Axis.YP.rotationDegrees(rotY));
 						event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(rotZ));
-						model.renderToBuffer(event.getPoseStack(), consumer, particle.getLightColor(event.getPartialTick().getGameTimeDeltaTicks()), OverlayTexture.NO_OVERLAY, 1);
+						model.renderToBuffer(event.getPoseStack(), consumer, particle.getLightColor(event.getPartialTick().getGameTimeDeltaTicks()), OverlayTexture.NO_OVERLAY, 0xFFFFFFFF);
 						event.getPoseStack().popPose();
 					}
 				}
