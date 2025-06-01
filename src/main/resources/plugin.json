@@ -1,14 +1,14 @@
 {
-  "id": "configuration_files",
+  "id": "extended_core",
   "weight": 3001,
   "javaplugin": "net.magicalalexey.extended_core.Launcher",
   "supportedversions": [
     2025002
   ],
   "info": {
-    "name": "Configuration Files",
+    "name": "MCreator Extended Core",
     "version": "2.5",
-    "description": "Adds a new element to allow for the creation of configuration files",
-    "author": "NerdyPuzzle"
+    "description": "Adds a new elements to allow for the creation of configuration files, armor trims and materials, blockstates and 3D particles",
+    "author": "MagicalAlexey, based on plugins by NerdyPuzzle"
   }
 }

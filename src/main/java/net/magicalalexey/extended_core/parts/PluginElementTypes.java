@@ -1,11 +1,7 @@
 package net.magicalalexey.extended_core.parts;
 
-import net.magicalalexey.extended_core.element.types.ArmorTrim;
-import net.magicalalexey.extended_core.element.types.Config;
-import net.magicalalexey.extended_core.element.types.TrimMaterial;
-import net.magicalalexey.extended_core.ui.modgui.TrimMaterialGUI;
-import net.magicalalexey.extended_core.ui.modgui.ArmorTrimGUI;
-import net.magicalalexey.extended_core.ui.modgui.ConfigGUI;
+import net.magicalalexey.extended_core.element.types.*;
+import net.magicalalexey.extended_core.ui.modgui.*;
 
 import net.mcreator.element.ModElementType;
 
@@ -15,6 +11,8 @@ public class PluginElementTypes {
     public static ModElementType<?> CONFIG;
     public static ModElementType<?> ARMORTRIM;
     public static ModElementType<?> TRIMMATERIAL;
+    public static ModElementType<?> PARTICLEMODEL;
+    public static ModElementType<?> MIXIN;
 
     public static void load() {
 
@@ -29,6 +27,13 @@ public class PluginElementTypes {
         TRIMMATERIAL = register(
                 new ModElementType<>("trimmaterial", (Character) null, TrimMaterialGUI::new, TrimMaterial.class)
         );
+        PARTICLEMODEL = register(
+                new ModElementType<>("particlemodel", (Character) null, ParticleModelGUI::new, ParticleModel.class)
+        );
+        MIXIN = register(
+                new ModElementType<>("particlemodel", (Character) null, MixinGUI::new, Mixin.class)
+        );
+
 
     }
 
