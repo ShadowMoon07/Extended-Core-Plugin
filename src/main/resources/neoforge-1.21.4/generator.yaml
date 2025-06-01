@@ -95,7 +95,7 @@ base_templates:
   - template: modbase/mixins.json.ftl
     writer: json
     condition_any:
-      - "${w.getGElementsOfType('mixin')}"
+      - "${w.hasElementsOfType('mixin')}"
     name: "@RESROOT/@modid.mixins.json"
 
 java_models:

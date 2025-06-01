@@ -75,7 +75,7 @@ ordering="NONE"
 side="BOTH"
 </#list>
 
-<#if w.getGElementsOfType('mixin')>
+<#if w.hasElementsOfType('mixin')>
 [[mixins]]
     config = "${settings.getModID()}.mixins.json"
 </#if>
