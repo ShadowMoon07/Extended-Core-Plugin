@@ -27,7 +27,7 @@ description="${JavaConventions.escapeStringForJava(settings.getDescription())}"
 <#if settings.isServerSideOnly()>
 displayTest="IGNORE_SERVER_VERSION"
 </#if>
-<#if w.getGElementsOfType('livingentity')?filter(e -> e.mobBehaviourType == "Raider")?size != 0 || w.getGElementsOfType('animatedentity')?filter(e -> e.mobBehaviourType == "Raider")?size != 0 || w.getGElementsOfType('animateditem')?filter(e -> e.enableArmPose)?size != 0>
+<#if w.getGElementsOfType('livingentity')?filter(e -> e.mobBehaviourType == "Raider")?size != 0>
 enumExtensions="META-INF/enumextensions.json"
 </#if>
 
@@ -35,47 +35,47 @@ enumExtensions="META-INF/enumextensions.json"
 # End of user code block mod configuration
 
 [[dependencies.${settings.getModID()}]]
-modId="neoforge"
-type="required"
-versionRange="[${generator.getGeneratorBuildFileVersion()},)"
-ordering="AFTER"
-side="BOTH"
+    modId="neoforge"
+    type="required"
+    versionRange="[${generator.getGeneratorBuildFileVersion()},)"
+    ordering="AFTER"
+    side="BOTH"
 
 [[dependencies.${settings.getModID()}]]
-modId="minecraft"
-type="required"
-versionRange="[${generator.getGeneratorMinecraftVersion()}]"
-ordering="AFTER"
-side="BOTH"
+    modId="minecraft"
+    type="required"
+    versionRange="[${generator.getGeneratorMinecraftVersion()}]"
+    ordering="AFTER"
+    side="BOTH"
 
 <#list settings.getRequiredMods() as e>
 [[dependencies.${settings.getModID()}]]
-modId="${e}"
-type="required"
-versionRange="[0,)"
-ordering="NONE"
-side="BOTH"
+    modId="${e}"
+    type="required"
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
 </#list>
 
 <#list settings.getDependencies() as e>
 [[dependencies.${settings.getModID()}]]
-modId="${e}"
-type="optional"
-versionRange="[0,)"
-ordering="NONE"
-side="BOTH"
+    modId="${e}"
+    type="optional"
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
 </#list>
 
 <#list settings.getDependants() as e>
 [[dependencies.${settings.getModID()}]]
-modId="${e}"
-type="optional"
-versionRange="[0,)"
-ordering="NONE"
-side="BOTH"
+    modId="${e}"
+    type="optional"
+    versionRange="[0,)"
+    ordering="NONE"
+    side="BOTH"
 </#list>
 
-<#if w.hasElementsOfType('mixin')>
+<#if w.hasElementsOfType("mixin")>
 [[mixins]]
     config = "${settings.getModID()}.mixins.json"
 </#if>
