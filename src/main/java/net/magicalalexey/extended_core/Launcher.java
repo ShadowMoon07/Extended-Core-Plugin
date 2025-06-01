@@ -1,10 +1,7 @@
 package net.magicalalexey.extended_core;
 
 import freemarker.template.Template;
-import net.magicalalexey.extended_core.element.types.Mixin;
-import net.magicalalexey.extended_core.ui.modgui.MixinGUI;
 import net.mcreator.blockly.data.BlocklyLoader;
-import net.mcreator.element.ModElementType;
 import net.mcreator.generator.Generator;
 import net.mcreator.generator.GeneratorFlavor;
 import net.mcreator.generator.template.InlineTemplatesHandler;
@@ -28,8 +25,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import static net.mcreator.element.ModElementTypeLoader.register;
 
 public class Launcher extends JavaPlugin {
 
@@ -66,8 +61,6 @@ public class Launcher extends JavaPlugin {
 				}
 			}
 		});
-
-		addListener(PreGeneratorsLoadingEvent.class, event -> register(new ModElementType<>("mixin", 'M', MixinGUI::new, Mixin.class)));
 		addListener(PreGeneratorsLoadingEvent.class, e -> {
 			PluginElementTypes.load();
 			BlocklyLoader.INSTANCE.addBlockLoader(CONFIG_EDITOR);
