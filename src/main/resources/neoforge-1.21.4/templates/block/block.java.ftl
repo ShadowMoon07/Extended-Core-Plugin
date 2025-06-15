@@ -208,6 +208,9 @@ public class ${name}Block extends
 		<#if data.blockBase?has_content && data.blockBase == "EndRod">
 			.forceSolidOff()
 		</#if>
+		<#if data.blockBase?has_content && data.blockBase == "Leaves">
+			.isSuffocating((bs, br, bp) -> false).isViewBlocking((bs, br, bp) -> false)
+		</#if>
 	</#macro>
 
 	public ${name}Block(BlockBehaviour.Properties properties) {
@@ -645,7 +648,7 @@ public class ${name}Block extends
 		public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
 			super.triggerEvent(state, world, pos, eventID, eventParam);
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
+			return blockEntity != null && blockEntity.triggerEvent(eventID, eventParam);
 		}
 
 	    <#if data.inventoryDropWhenDestroyed>
