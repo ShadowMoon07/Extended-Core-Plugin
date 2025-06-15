@@ -77,7 +77,7 @@ enumExtensions="META-INF/enumextensions.json"
 
 <#if w.hasElementsOfType("mixin") || w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
 [[mixins]]
-    config = "${settings.getModID()}.mixins.json"
+    config = "${settings.getModID()}.mixin.json"
 </#if>
 
 # Start of user code block custom mixins

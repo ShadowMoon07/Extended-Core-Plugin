@@ -92,7 +92,7 @@ base_templates:
     name: "@RESROOT/META-INF/enumextensions.json"
     condition_any:
       - "${w.getGElementsOfType('livingentity')?filter(e -> e.mobBehaviourType == \"Raider\")?size != 0}"
-  - template: modbase/mixins.json.ftl
+  - template: modbase/mixin.json.ftl
     writer: json
     condition_any:
       - "${w.hasElementsOfType('mixin') || w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0}"
