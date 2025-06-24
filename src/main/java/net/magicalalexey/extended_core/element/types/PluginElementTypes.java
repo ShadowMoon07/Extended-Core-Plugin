@@ -12,6 +12,8 @@ public class PluginElementTypes {
     public static ModElementType<?> BLOCKSTATES;
     public static ModElementType<?> PARTICLEMODEL;
     public static ModElementType<?> MIXIN;
+    public static ModElementType<?> DYEABLE_ITEM;
+    public static ModElementType<?> DYEABLE_ARMOR;
 
     public static void load(){
         CONFIG = register(
@@ -32,6 +34,12 @@ public class PluginElementTypes {
         );
         MIXIN = register(
                 new ModElementType<>("mixin", (Character) null, MixinGUI::new, Mixin.class)
+        );
+        DYEABLE_ITEM = register(
+                new ModElementType<>("dyeable_item", (Character) null, DyeableItemGUI::new, DyeableItem.class)
+        );
+        DYEABLE_ARMOR = register(
+                new ModElementType<>("dyeable_armor", (Character) null, DyeableArmorGUI::new, DyeableArmor.class)
         );
     }
 }
