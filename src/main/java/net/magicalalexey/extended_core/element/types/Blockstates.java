@@ -53,13 +53,13 @@ public class Blockstates extends GeneratableElement {
         }
         public Model getItemModel(Workspace workspace) {
             Model.Type modelType = Model.Type.BUILTIN;
-            if (this.renderType == 2) {
+            if (renderType == 2)
                 modelType = Model.Type.JSON;
-            } else if (this.renderType == 3) {
+            else if (renderType == 3)
                 modelType = Model.Type.OBJ;
-            }
-
-            return Model.getModelByParams(workspace, this.customModelName, modelType);
+            else if (renderType == 4)
+                modelType = Model.Type.JAVA;
+            return Model.getModelByParams(workspace, customModelName, modelType);
         }
 
         @Nonnull
@@ -95,19 +95,19 @@ public class Blockstates extends GeneratableElement {
             return this.workspace;
         }
 
-        public Model getItemModel() {
+        public Model getItemModel(Workspace workspace) {
             Model.Type modelType = Model.Type.BUILTIN;
-            if (renderType == 2) {
+            if (renderType == 2)
                 modelType = Model.Type.JSON;
-            } else if (renderType == 3) {
+            else if (renderType == 3)
                 modelType = Model.Type.OBJ;
-            }
-
+            else if (renderType == 4)
+                modelType = Model.Type.JAVA;
             return Model.getModelByParams(workspace, customModelName, modelType);
         }
 
-        public Map<String, String> getTextureMap() {
-            Model model = getItemModel();
+        public Map getTextureMap() {
+            Model model = getItemModel(workspace);
             return (Map)(model instanceof TexturedModel && ((TexturedModel)model).getTextureMapping() != null ? ((TexturedModel)model).getTextureMapping().getTextureMap() : new HashMap());
         }
 

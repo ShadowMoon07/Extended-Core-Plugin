@@ -165,7 +165,7 @@ public class JBlockstateListEntry extends JSimpleListEntry<Blockstates.Blockstat
     public void reloadDataLists() {
         super.reloadDataLists();
         ComboBoxUtil.updateComboBoxContents(this.renderType, ListUtils.merge(Arrays.asList(this.normal, this.singleTexture, this.cross, this.crop), (Collection)Model.getModelsWithTextureMaps(workspace).stream().filter((el) -> {
-            return el.getType() == Model.Type.JSON || el.getType() == Model.Type.OBJ;
+            return el.getType() == Model.Type.JSON || el.getType() == Model.Type.OBJ || el.getType() == Model.Type.JAVA;
         }).collect(Collectors.toList())));
     }
 
@@ -197,12 +197,14 @@ public class JBlockstateListEntry extends JSimpleListEntry<Blockstates.Blockstat
             entry.renderType = 2;
         } else if (model.getType() == Model.Type.OBJ) {
             entry.renderType = 3;
-        } else if (model.equals(this.singleTexture)) {
+        } else if (model.getType() == Model.Type.JAVA) {
             entry.renderType = 4;
-        } else if (model.equals(this.cross)) {
-            entry.renderType = 1;
-        } else if (model.equals(this.crop)) {
+        } else if (model.equals(this.singleTexture)) {
             entry.renderType = 5;
+        } else if (model.equals(this.cross)) {
+            entry.renderType = 6;
+        } else if (model.equals(this.crop)) {
+            entry.renderType = 7;
         }
         entry.customModelName = model.getReadableName();
         entry.particleTexture = this.particleTexture.getTextureHolder();
