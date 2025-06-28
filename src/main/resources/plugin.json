@@ -7,7 +7,7 @@
   ],
   "info": {
     "name": "MCreator Extended Core",
-    "version": "2.5",
+    "version": "1.0",
     "description": "Adds a new elements to allow for the creation of configuration files, armor trims and materials, blockstates and 3D particles",
     "author": "MagicalAlexey, based on plugins by NerdyPuzzle"
   }
