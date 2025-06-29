@@ -12,6 +12,8 @@ public class PluginElementTypes {
     public static ModElementType<?> BLOCKSTATES;
     public static ModElementType<?> PARTICLEMODEL;
     public static ModElementType<?> MIXIN;
+    public static ModElementType<?> ENDBIOME;
+    public static ModElementType<?> ENDSTONE;
 
     public static void load(){
         CONFIG = register(
@@ -32,6 +34,13 @@ public class PluginElementTypes {
         );
         MIXIN = register(
                 new ModElementType<>("mixin", (Character) null, MixinGUI::new, Mixin.class)
+        );
+        ENDBIOME = register(
+                new ModElementType<>("endbiome", (Character) 'E', EndBiomeGUI::new, EndBiome.class)
+        );
+
+        ENDSTONE = register(
+                new ModElementType<>("endstone", (Character) null, EndstoneGUI::new, Endstone.class)
         );
     }
 }

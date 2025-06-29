@@ -75,7 +75,7 @@ enumExtensions="META-INF/enumextensions.json"
     side="BOTH"
 </#list>
 
-<#if w.hasElementsOfType("mixin") || w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
+<#if w.hasElementsOfType("mixin") || w.hasElementsOfType("endbiome") || w.hasElementsOfType("endstone") ||  w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0>
 [[mixins]]
     config = "${settings.getModID()}.mixins.json"
 </#if>

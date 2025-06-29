@@ -1,6 +1,7 @@
 package net.magicalalexey.extended_core;
 
 import freemarker.template.Template;
+import net.magicalalexey.extended_core.ui.modgui.EndBiomeGUI;
 import net.mcreator.blockly.data.BlocklyLoader;
 import net.mcreator.generator.Generator;
 import net.mcreator.generator.GeneratorFlavor;
@@ -8,19 +9,24 @@ import net.mcreator.generator.template.InlineTemplatesHandler;
 import net.mcreator.generator.template.base.BaseDataModelProvider;
 import net.mcreator.io.FileIO;
 import net.mcreator.plugin.PluginLoader;
+import net.mcreator.plugin.events.ui.ModElementGUIEvent;
 import net.mcreator.plugin.events.workspace.MCreatorLoadedEvent;
 import net.mcreator.ui.blockly.BlocklyEditorType;
 import net.magicalalexey.extended_core.element.types.PluginElementTypes;
 import net.mcreator.plugin.JavaPlugin;
 import net.mcreator.plugin.Plugin;
 import net.mcreator.plugin.events.PreGeneratorsLoadingEvent;
+import net.mcreator.ui.modgui.BiomeGUI;
+import net.mcreator.ui.modgui.ModElementGUI;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 import java.util.Map;
@@ -29,6 +35,10 @@ import java.util.Set;
 public class Launcher extends JavaPlugin {
 
 	private static final Logger LOG = LogManager.getLogger("Configuration Files");
+	public static void disableComponent(ModElementGUI gui, Field field) throws Exception {
+		field.setAccessible(true);
+		((JComponent)field.get(gui)).setEnabled(false);
+	}
 	public static final BlocklyEditorType CONFIG_EDITOR = new BlocklyEditorType("config", "cfg", "config_start");
 
 	public Launcher(Plugin plugin) {
@@ -64,6 +74,26 @@ public class Launcher extends JavaPlugin {
 		addListener(PreGeneratorsLoadingEvent.class, e -> {
 			PluginElementTypes.load();
 			BlocklyLoader.INSTANCE.addBlockLoader(CONFIG_EDITOR);
+		});
+		addListener(ModElementGUIEvent.AfterLoading.class, event -> {
+			if (event.getModElementGUI() instanceof BiomeGUI biome) {
+				if (EndBiomeGUI.isEndBiome(biome.getElementFromGUI().getModElement().getName(), null, event.getMCreator())) {
+					try {
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnBiome"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnBiomeNether"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("spawnInCaves"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("underwaterBlock"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("genTemperature"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("genHumidity"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("genContinentalness"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("genErosion"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("genWeirdness"));
+						disableComponent(biome, BiomeGUI.class.getDeclaredField("treesPerChunk"));
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		});
 
 		LOG.info("Extended core plugin was loaded");

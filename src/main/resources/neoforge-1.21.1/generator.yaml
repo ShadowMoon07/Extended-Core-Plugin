@@ -96,7 +96,7 @@ base_templates:
   - template: modbase/mixin.json.ftl
     writer: json
     condition_any:
-      - "${w.hasElementsOfType('mixin') || w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0}"
+      - "${w.hasElementsOfType('mixin') || w.hasElementsOfType('endbiome') || w.hasElementsOfType('endstone') || w.getGElementsOfType('biome')?filter(e -> e.spawnBiome || e.spawnInCaves || e.spawnBiomeNether)?size != 0}"
     name: "@RESROOT/@modid.mixins.json"
 
 sources_setup_tasks:
