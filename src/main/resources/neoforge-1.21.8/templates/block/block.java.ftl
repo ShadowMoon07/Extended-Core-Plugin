@@ -49,7 +49,7 @@ public class ${name}Block extends
 	<#if data.hasGravity>
 		FallingBlock
 	<#elseif data.blockBase?has_content>
-		${data.blockBase?replace("Stairs", "Stair")?replace("Pane", "IronBars")}Block
+		${data.blockBase?replace("Stairs", "Stair")?replace("Pane", "IronBars")?replace("Leaves", "TintedParticleLeaves")}Block
 	<#else>
 		Block
 	</#if>
@@ -61,7 +61,7 @@ public class ${name}Block extends
 	<#if data.hasInventory>
 		<#assign interfaces += ["EntityBlock"]>
 	</#if>
-	<#if data.isBonemealable>
+	<#if data.isBonemealable && !(data.blockBase?has_content && data.blockBase == "TrapDoor")>
 		<#assign interfaces += ["BonemealableBlock"]>
 	</#if>
 	<#if interfaces?size gt 0>
@@ -110,32 +110,16 @@ public class ${name}Block extends
 	<#if data.hasGravity>
 	public static final MapCodec<${name}Block> CODEC = simpleCodec(${name}Block::new);
 
-	public MapCodec<${name}Block> codec() {
+	@Override public MapCodec<${name}Block> codec() {
 		return CODEC;
 	}
-    @Override
-       public int getDustColor(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos) {
-          return 0;
-    }
+
+    @Override public int getDustColor(BlockState blockstate, BlockGetter world, BlockPos pos) {
+		return blockstate.getMapColor(world, pos).col;
+	}
 	</#if>
 
-	    <#if data.blockBase?has_content && data.blockBase == "Leaves">
-
-        	@Override
-        	public MapCodec<? extends LeavesBlock> codec() {
-        		return null;
-        	}
-
-    	@Override
-    	protected void spawnFallingLeavesParticle(Level level, BlockPos blockPos, RandomSource randomSource) {
-
-    	}
-        </#if>
-
 	<#macro blockProperties>
-		<#if data.blockBase?has_content && data.blockBase == "Leaves">
-		1f,
-		</#if>
 		properties
 		<#if generator.map(data.colorOnMap, "mapcolors") != "DEFAULT">
 			.mapColor(MapColor.${generator.map(data.colorOnMap, "mapcolors")})
@@ -237,6 +221,8 @@ public class ${name}Block extends
 		<#if data.blockBase?has_content>
 			<#if data.blockBase == "Stairs">
 				super(Blocks.AIR.defaultBlockState(), <@blockProperties/>);
+			<#elseif data.blockBase == "Leaves">
+				super(0.01f, <@blockProperties/>);
 			<#elseif data.blockBase == "PressurePlate" || data.blockBase == "TrapDoor" || data.blockBase == "Door">
 				super(BlockSetType.${data.blockSetType}, <@blockProperties/>);
 			<#elseif data.blockBase == "Button">
@@ -281,8 +267,6 @@ public class ${name}Block extends
 		return ${data.resistance}f;
    	}
 	</#if>
-
-	<@addSpecialInformation data.specialInformation, "block." + modid + "." + registryname, true/>
 
 	<#if data.displayFluidOverlay>
 	@Override public boolean shouldDisplayFluidOverlay(BlockState state, BlockAndTintGetter world, BlockPos pos, FluidState fluidstate) {
@@ -339,7 +323,7 @@ public class ${name}Block extends
 		<#if data.isBoundingBoxEmpty()>
 			return Shapes.empty();
 		<#else>
-			<#if !data.shouldDisableOffset()>Vec3 offset = state.getOffset(world, pos);</#if>
+			<#if !data.shouldDisableOffset()>Vec3 offset = state.getOffset(pos);</#if>
 			<@boundingBoxWithRotation data.positiveBoundingBoxes() data.negativeBoundingBoxes() data.shouldDisableOffset() data.rotationMode data.enablePitch/>
 		</#if>
 	}
@@ -650,7 +634,7 @@ public class ${name}Block extends
 	}
 	</#if>
 
-	<#if data.isBonemealable>
+	<#if data.isBonemealable && !(data.blockBase?has_content && data.blockBase == "TrapDoor")>
 	<@bonemealEvents data.isBonemealTargetCondition, data.bonemealSuccessCondition, data.onBonemealSuccess/>
 	</#if>
 
@@ -672,14 +656,8 @@ public class ${name}Block extends
 		}
 
 	    <#if data.inventoryDropWhenDestroyed>
-		@Override public void affectNeighborsAfterRemoval(BlockState state, ServerLevel world, BlockPos pos, boolean isMoving) {
-				BlockEntity blockEntity = world.getBlockEntity(pos);
-				if (blockEntity instanceof ${name}BlockEntity be) {
-					Containers.dropContents(world, pos, be);
-					world.updateNeighbourForOutputSignal(pos, this);
-				}
-
-				super.affectNeighborsAfterRemoval(state, world, pos, isMoving);
+		@Override protected void affectNeighborsAfterRemoval(BlockState blockstate, ServerLevel world, BlockPos blockpos, boolean flag) {
+			Containers.updateNeighboursAfterDestroy(blockstate, world, blockpos);
 		}
 	    </#if>
 
@@ -711,7 +689,7 @@ public class ${name}Block extends
 	</#if>
 
 	<#if data.tintType != "No tint">
-		@OnlyIn(Dist.CLIENT) public static void blockColorLoad(RegisterColorHandlersEvent.Block event) {
+		public static void blockColorLoad(RegisterColorHandlersEvent.Block event) {
 			event.register((bs, world, pos, index) -> {
 				<#if data.tintType == "Default foliage">
 					return FoliageColor.FOLIAGE_DEFAULT;
@@ -759,6 +737,18 @@ public class ${name}Block extends
 		}
 		</#if>
 	</#list>
+
+	<#if data.hasSpecialInformation(w)>
+	public static class Item extends <#if data.isDoubleBlock()>DoubleHigh</#if>BlockItem {
+
+		public Item(Item.Properties properties) {
+			super(${JavaModName}Blocks.${REGISTRYNAME}.get(), properties);
+		}
+
+		<@addSpecialInformation data.specialInformation, "block." + modid + "." + registryname, true/>
+
+	}
+	</#if>
 
 }
 </#compress>
